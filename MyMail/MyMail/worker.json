@@ -1,0 +1,19 @@
+{
+  "domain":
+  {
+    "name": "MyMail"
+  },
+  "workflow_workers": [
+    {
+      "task_list": "mymail_workflow_tasklist",
+      "number_of_workers": 4
+    }
+  ],
+  "activity_workers": [
+    {
+      "activity_classes": ["MyMailActivities"],
+      "task_list": "mymail_activity_tasklist",
+      "number_of_workers": 4
+    }
+  ]
+}
