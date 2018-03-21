@@ -13,7 +13,6 @@ Dotenv.load
 p ENV['BUCKET_NAME']
 
 input = {
-#    bucket_name: "swf.kuredev.info",
     bucket_name: ENV['BUCKET_NAME'],
     object_name: "test_image.jpg",
     saved_object_name: "./test_image2.jpg",
