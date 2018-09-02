@@ -30,10 +30,10 @@ active_worker = AWS::Flow::ActivityWorker.new(
 
 実行方法
 ```
-$ ruby ../starter.rb
-$ ruby s3app_workflow_worker.rb
-$ ruby s3_download_acivity_worker.rb
-$ ruby s3_upload_acivity_worker.rb
+$ bundle exec ruby ../starter.rb
+$ bundle exec ruby s3app_workflow_worker.rb
+$ bundle exec ruby s3_download_acivity_worker.rb
+$ bundle exec ruby s3_upload_acivity_worker.rb
 ```
 
 
