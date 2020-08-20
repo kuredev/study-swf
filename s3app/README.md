@@ -1,39 +1,39 @@
+## 概要
+
 - AWS Flow Framework for Rubyのサンプル
 - S3からオブジェクトをダウンロードし、ファイル名を変更してアップロードする
 - 面倒でバケット名以外のパラメータはハードコーディングしてるので適宜調整すること
-- 実行方法
+
+## 実行方法
     - 以下を作成しておく
-        - ドメイン： Booking3
-        - ワークフロータイプ：S3AppWorkFlow.s3app(1.0)
-        - ワークフロータイプ：S3AppWorkFlow2.s3app(1.0)
-        - アクティビティタイプ：S3DownloadActivity.download4(1.0)
-        - アクティビティタイプ:S3UploadActivity.upload2(1.0)
-        - アクティビティタイプ:S3UploadActivity2.upload2(1.0)
-    - S3バケットに「test_image.jpg」がある
-    - 以下を順に実行（starter以外のコマンドは別ターミナル）
-- ワークフローを複数ハンドリング可能
-    - ワークフロー実行時にワークフロータイプの引数を調整すれば切り替え可能
+        - S3バケット
+            - 「test_image.jpg」がある（ファイル名は適当に読み替えること）
+        - SWF
+            - ドメイン： Booking3
+            - 以下のアクティビティタイプ/ワークフロータイプを作っておく
 
-以下のようにワークフローワーカを作成するときに各ワークフローやアクティビティを複数登録しておく
-```ruby
-# ワークフロータスクリスト
-workflow_worker = AWS::Flow::WorkflowWorker.new(
-    swf.client, domain, "s3-decition-task-list", *[S3AppWorkFlow2, S3AppWorkFlow])
+### アクティビティタイプ
+
+| タイプ名                     | バージョン | タスクリスト           |
+|------------------------------|------------|------------------------|
+| S3UploadActivity.upload2     | 1          | s3-activity-task-list2 |
+| S3UploadActivity2.upload2    | 〃         | 〃                     |
+| S3DownloadActivity.download4 | 1          | s3-activity-task-list  |
+
+### ワークフロータイプ
+
+| タイプ名             | バージョン | タスクリスト          |
+|----------------------|------------|-----------------------|
+| S3AppWorkFlow.s3app  | 1          | s3-decition-task-list |
+| S3AppWorkFlow2.s3app | 〃         | 〃                    |
+
+## 実行手順
+
 ```
-
-```ruby
-# アクティビティタスクリスト
-active_worker = AWS::Flow::ActivityWorker.new(
-    domain.client, domain, "s3-activity-task-list2", *[S3UploadActivity, S3UploadActivity2] )
-```
-
-
-実行方法
-```
+$ pwd
+study-swf/s3app/flow
 $ bundle exec ruby ../starter.rb
 $ bundle exec ruby s3app_workflow_worker.rb
 $ bundle exec ruby s3_download_acivity_worker.rb
 $ bundle exec ruby s3_upload_acivity_worker.rb
 ```
-
-
